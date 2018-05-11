@@ -1,0 +1,10 @@
+<!doctype html>
+<title>{{ smurf }}</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class=page>
+  <h1>{{ smurf }}</h1>
+  {% for table in tables %}
+    <h2>Last hour of traffic for blue {{ smurf }}</h2>
+    {{ table|safe }}
+  {% endfor %}
+</div>

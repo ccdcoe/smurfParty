@@ -1,0 +1,56 @@
+{
+  "size": 0,
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "query_string" : {
+            "default_field": "protocol",
+            "query": "protocol: tcp"
+          }
+        }
+      ]
+    }
+  },
+  "aggs": {
+    "sourceTeam": {
+      "terms": {
+        "field": "srcRIR",
+        "size": 30,
+        "min_doc_count": 0,
+        "order": {
+          "_key": "asc"
+        }
+      },
+      "aggs": {
+        "destTeam": {
+          "terms": {
+            "field": "dstRIR",
+            "size": 30,
+            "min_doc_count": 0,
+            "order": {
+              "_key": "asc"
+            }
+          },
+          "aggs": {
+            "dataBytes": {
+              "sum": {
+                "field": "totDataBytes"
+              }
+            },
+            "packets": {
+              "sum": {
+                "field": "totPackets"
+              }
+            },
+            "bytes": {
+              "sum": {
+                "field": "totBytes"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
